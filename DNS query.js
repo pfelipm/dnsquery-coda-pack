@@ -51,10 +51,10 @@ async function NSLookup(type, domain, context) {
     response.body.Answer.forEach(answer => outputData.push(answer.data));
     return outputData.join();
 
-  } catch(e) {
+  } catch (e) {
     return "Could not fetch result!";
   }
-    
+
 }
 
 
@@ -100,7 +100,7 @@ pack.addFormula({
 
   // Actual code
   execute: function ([dnsRecord, domain], context) {
-    
+
     // No need to check param type, Coda takes care of converting it to the declared type, it seems
     dnsRecord = dnsRecord.toUpperCase().trim();
     domain = domain.toLowerCase().trim();
@@ -110,9 +110,9 @@ pack.addFormula({
     if (dnsRecord.length == 0) throw new Error("Invalid DNS record type.");
     if (domain.length == 0) throw new Error("Invalid domain.");
     if (!DNS_RECORDS.includes(dnsRecord)) throw new Error("Unknown dnsRecordType.");
-    
+
     return NSLookup(dnsRecord, domain, context);
-  
+
   }
 
 });
@@ -176,8 +176,8 @@ pack.addFormula({
     // No need to check param type, Coda takes care of converting it to the declared type, it seems
     if (email.length == 0) throw new Error("Invalid DNS record type.");
 
-    let domains= [];
-    switch(testType) {
+    let domains = [];
+    switch (testType) {
       case "workspace":
         domains = ["aspmx.l.google.com", "googlemail.com"]; // 2nd one is obsolete :-?
         break;
@@ -186,13 +186,13 @@ pack.addFormula({
         break;
       case 'google':
         domains = ["aspmx.l.google.com", "googlemail.com", "gmail-smtp-in.l.google.com"];
-        break; 
+        break;
       default:
         domains = ["aspmx.l.google.com", "googlemail.com", "gmail-smtp-in.l.google.com"];
     }
 
     const domainToCheck = email.includes("@") ? email.match(/.*@(.+)$/)[1] : email;
-    
+
     return NSLookup('MX', domainToCheck, context).then(mxRecords => domains.some(domain => mxRecords.includes(domain)));
 
   }
