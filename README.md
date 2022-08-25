@@ -1,4 +1,4 @@
-# dnsquery-coda-pack
+# DNS Query, a Coda Pack
 
 ![](https://user-images.githubusercontent.com/12829262/182559678-98a6eebb-9b63-40e9-96d3-9f57cb873184.png)  
 ![Created with - JavaScript](https://img.shields.io/static/v1?label=Created+with&message=JavaScript&color=blue&logo=JavaScript)
