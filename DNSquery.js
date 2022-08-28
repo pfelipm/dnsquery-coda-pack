@@ -1,6 +1,6 @@
 /**
  * A quick port of these Apps Script custom functions >> https://github.com/pfelipm/fxdnsquery
- * 01/08/22 @pfelipm
+ * @pfelipm (01/08/22) / MIT License
  */
 
 // Init
@@ -40,9 +40,6 @@ async function NSLookup(type, domain, context) {
       headers: { accept: "application/dns-json" }
     });
 
-    // Fetch OK?
-    if (response.status != 200) throw new Error(`Internal fetch error: ${response.status}`);
-
     // Checks status of response object, quits if error reported (see table above)
     if (response.body.Status !== 0) return `Error: ${errors[response.body.Status].description}`;
 
@@ -51,10 +48,21 @@ async function NSLookup(type, domain, context) {
     response.body.Answer.forEach(answer => outputData.push(answer.data));
     return outputData.join();
 
-  } catch (e) {
-    return "Could not fetch result!";
+  } catch (error) {
+    // Response code equal to 300+ will trigger a StatusCodeError exception
+    // https://coda.io/packs/build/latest/guides/advanced/fetcher/#errors
+    if (error.statusCode) {
+      // Cast the error as a StatusCodeError, for better intellisense
+      let statusError = error as coda.StatusCodeError;
+      // If the API returned an error message in the body, show it to the user
+      let message = statusError.body?.message;
+      if (message) {
+        throw new coda.UserVisibleError(message);
+      }
+    }
+  // The request failed for some other reason, re-throw
+    throw error;
   }
-
 }
 
 
@@ -107,9 +115,9 @@ pack.addFormula({
 
     // These messages will appear in the Packs execution log (click on "View error details"),
     // does not seem appropriate to show meaningful error messages to the user.
-    if (dnsRecord.length == 0) throw new Error("Invalid DNS record type.");
-    if (domain.length == 0) throw new Error("Invalid domain.");
-    if (!DNS_RECORDS.includes(dnsRecord)) throw new Error("Unknown dnsRecordType.");
+    if (dnsRecord.length == 0) throw new coda.UserVisibleError("Invalid DNS record type");
+    if (domain.length == 0) throw new coda.UserVisibleError("Invalid domain");
+    if (!DNS_RECORDS.includes(dnsRecord)) throw new coda.UserVisibleError("Unknown dnsRecordType");
 
     return NSLookup(dnsRecord, domain, context);
 
@@ -121,7 +129,7 @@ pack.addFormula({
 pack.addColumnFormat({
 
   name: "Is a Google email",
-  instructions: "Will return a true value if email addresses (or domains) in this column are of the Gmail or Google Workspace type.",
+  instructions: "Will return a true value if email addresses (or domains) in this column are of the Gmail or Google Workspace type",
   formulaName: "IsGoogleEmail"
 
 });
@@ -174,7 +182,7 @@ pack.addFormula({
     testType = testType.toLowerCase().trim();
 
     // No need to check param type, Coda takes care of converting it to the declared type, it seems
-    if (email.length == 0) throw new Error("Invalid DNS record type.");
+    if (email.length == 0) throw new coda.UserVisibleError("Invalid DNS record type.");
 
     let domains = [];
     switch (testType) {
