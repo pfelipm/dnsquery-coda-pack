@@ -1,6 +1,6 @@
 # DNSQuery
 
-![](https://user-images.githubusercontent.com/12829262/182559678-98a6eebb-9b63-40e9-96d3-9f57cb873184.png)
+![](https://user-images.githubusercontent.com/12829262/187099121-c6578b5b-6b8e-4bf7-ae28-016ac3de23c8.png)
 
 ![Created with - JavaScript](https://img.shields.io/static/v1?label=Created+with&message=JavaScript&color=blue&logo=JavaScript)
 
