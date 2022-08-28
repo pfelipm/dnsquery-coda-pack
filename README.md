@@ -1,4 +1,4 @@
-# DNSQuery for Coda
+# DNS Query for Coda
 
 ![](https://user-images.githubusercontent.com/12829262/187099121-c6578b5b-6b8e-4bf7-ae28-016ac3de23c8.png)
 
