@@ -70,7 +70,7 @@ async function NSLookup(type, domain, context) {
 pack.addFormula({
 
   name: "DnsRecord",
-  description: "Looks up a DNS record of the provided domain",
+  description: "Looks up a DNS record in the provided domain",
 
   // Parameters
   parameters: [
@@ -115,7 +115,6 @@ pack.addFormula({
 
     // These messages will appear in the Packs execution log (click on "View error details"),
     // does not seem appropriate to show meaningful error messages to the user.
-    if (dnsRecord.length == 0) throw new coda.UserVisibleError("Invalid DNS record type");
     if (domain.length == 0) throw new coda.UserVisibleError("Invalid domain");
     if (!DNS_RECORDS.includes(dnsRecord)) throw new coda.UserVisibleError("Unknown dnsRecordType");
 
@@ -138,7 +137,7 @@ pack.addColumnFormat({
 pack.addFormula({
 
   name: "IsGoogleEmail",
-  description: "Finds out if an email address (or domain) is of the Gmail or Google Workspace type",
+  description: "Finds out if an email address or domain is of the Google Workspace (or Gmail) type",
 
   // Parameters
   parameters: [
@@ -182,7 +181,7 @@ pack.addFormula({
     testType = testType.toLowerCase().trim();
 
     // No need to check param type, Coda takes care of converting it to the declared type, it seems
-    if (email.length == 0) throw new coda.UserVisibleError("Invalid DNS record type.");
+    if (email.length == 0) throw new coda.UserVisibleError("Invalid email address or domain");
 
     let domains = [];
     switch (testType) {
