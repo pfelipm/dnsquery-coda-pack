@@ -199,7 +199,6 @@ pack.addFormula({
     }
 
     const domainToCheck = email.includes("@") ? email.match(/.*@(.+)$/)[1] : email;
-
     return NSLookup('MX', domainToCheck, context).then(mxRecords => domains.some(domain => mxRecords.toLowerCase().includes(domain)));
 
   }
