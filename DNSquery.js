@@ -65,7 +65,6 @@ async function NSLookup(type, domain, context) {
   }
 }
 
-
 // Formula that fetches a DNS record from the provided domain
 pack.addFormula({
 
