@@ -19,16 +19,16 @@ const CLOUDFLARE_DNS_ENDPOINT = "https://cloudflare-dns.com/dns-query";
 async function NSLookup(type, domain, context) {
 
   const errors = [
-    { "name": "NoError", "description": "No Error." }, // 0
-    { "name": "FormErr", "description": "Format Error." }, // 1
-    { "name": "ServFail", "description": "Server Failure." }, // 2
-    { "name": "NXDomain", "description": "Non-Existent Domain." }, // 3
-    { "name": "NotImp", "description": "Not Implemented." }, // 4
-    { "name": "Refused", "description": "Query Refused." }, // 5
-    { "name": "YXDomain", "description": "Name Exists when it should not." }, // 6
-    { "name": "YXRRSet", "description": "RR Set Exists when it should not." }, // 7
-    { "name": "NXRRSet", "description": "RR Set that should exist does not." }, // 8
-    { "name": "NotAuth", "description": "Not Authorized." } // 9
+    { "name": "NoError", "description": "No Error" }, // 0
+    { "name": "FormErr", "description": "Format Error" }, // 1
+    { "name": "ServFail", "description": "Server Failure" }, // 2
+    { "name": "NXDomain", "description": "Non-Existent Domain" }, // 3
+    { "name": "NotImp", "description": "Not Implemented" }, // 4
+    { "name": "Refused", "description": "Query Refused" }, // 5
+    { "name": "YXDomain", "description": "Name Exists when it should not" }, // 6
+    { "name": "YXRRSet", "description": "RR Set Exists when it should not" }, // 7
+    { "name": "NXRRSet", "description": "RR Set that should exist does not" }, // 8
+    { "name": "NotAuth", "description": "Not Authorized" } // 9
   ];
 
   try {
@@ -199,7 +199,8 @@ pack.addFormula({
     }
 
     const domainToCheck = email.includes("@") ? email.match(/.*@(.+)$/)[1] : email;
-    return NSLookup('MX', domainToCheck, context).then(mxRecords => domains.some(domain => mxRecords.toLowerCase().includes(domain)));
+
+    return NSLookup('MX', domainToCheck, context).then(mxRecords => domains.some(domain => mxRecords.includes(domain)));
 
   }
 
